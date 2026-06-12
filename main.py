@@ -2,7 +2,7 @@ import os
 
 from dotenv import load_dotenv
 from langchain_core.prompts import PromptTemplate
-from langchain_openai import AzureChatOpenAI
+from langchain_openai import ChatOpenAI
 
 load_dotenv()
 
@@ -32,11 +32,9 @@ def main():
 
     summary_prompt_template = PromptTemplate(input_variables=["information"], template=summary_template)
 
-    llm = AzureChatOpenAI(
-        azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT_SANDBOX"),
-        api_key=os.getenv("AZURE_OPENAI_API_KEY_SANDBOX"),
-        api_version=os.getenv("AZURE_OPENAI_API_VERSION_SANDBOX"),
-        azure_deployment=os.getenv("AZURE_OPENAI_DEPLOYMENT_SANDBOX"),
+    llm = ChatOpenAI(
+         model="gpt-5.5",
+        api_key=os.getenv("OPENAI_API_KEY"),
         temperature=0,
     )
     chain = summary_prompt_template | llm
